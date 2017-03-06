@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Train Schedule</title>
+  <!-- Bootswatch Styling for Improving the Aesthetics -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css">
+  
+  <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script></script>
+
+  <script src="moment.js"></script>
+  
+  <!-- Font Awesome CSS Icons (For cool glyphicons) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Style to fix the issue of text extending past panel length -->
+  <style>
+    .panel-body a {
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Bootstrap Search -->
+  <div class="container">
+    <!-- Jumbotron for Title -->
+    <div class="jumbotron" style="background-color: #20315A ; color: white;">
+      <h1 class="text-center"><strong></i>Train Schedule</strong></h1>
+      <p class="text-center">An administrative tool for the scheduling of trains</p>
+    </div>
+    <!-- Row for the current train schedule -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <!-- First panel is for current train schedule -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong><i class="schedule-panel"></i>   Current Train Schedule</strong></h3>
+                      </div>
+          <div class="panel-body">
+          <table class="table">
+            <!-- Table for displaying train schedule inputs-->
+            <thead>
+              <tr>
+                <th>Train Name</th>
+                <th>Destination</th>
+                <th>Frequency (Min)</th>
+                <th>Next Arrival</th>
+                <th>Minutes Away</th>
+              </tr>
+            </thead>
+          <tbody>
+            <tr>
+            <td span id="name">Ash</td>
+            <td span id="destination">Web Developer</td>
+            <td span id="frequency">January 17, 2017</td>
+            <td span id="nextarrival">2</td>
+            <td span id="minutesaway">25 hourly</td>
+            </tr>
+          </tbody>
+       </table>     
+      </div>      
+    </div>
+    <!-- This row will handle the data input -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <div class="panel panel-primary">
+          <!-- Panel Heading for the retrieved articles box -->
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong><i class="data-entry-panel"></i>   Add Trains</strong></h3>
+          </div>
+          <form role="form">
+              <!-- Form for recording input of train information, beginning with Train Name-->
+              <div class="form-group">
+                <label for="train_name">Train Name:</label>
+                <input type="text" class="form-control" id="train_name">
+              </div>
+              <!-- Here we capture the Destination  -->
+              <div class="form-group">
+                <label for="train_destination">Destination:</label>
+                <input type="text" class="form-control" id="train_destination">
+              
+            </select>
+              </div>
+              <!-- Here we capture the First Train Time-->
+              <div class="form-group">
+                <label for="first_train_time">First Train Time (HH:mm - military time):</label>
+                <input type="text" class="form-control" id="first_train_time">
+              </div>
+              <!-- Here we capture the Train Frequency -->
+              <div class="form-group">
+                <label for="train_frequency">Frequency (Min):</label>
+                <input type="value" class="form-control" id="train_frequency">
+                </div>
+              <!-- Here we have our final submit button -->
+              <button type="submit" class="btn btn-default" id="add-train"><i class="data-entry-submit-button"></i> Submit</button>
+
+
+             
+            </form>
+          </div>
+        </div>
+      </div>
+          
+  <!-- jQuery JS -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Code to the JavaScript File -->
+  <script src="train-schedule.js"></script>
+</body>
+</html>
+
