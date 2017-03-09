@@ -15,18 +15,27 @@ var config = {
   var tdestination = "";
   var tfirsttraintime = "";
   var tfrequency = "";
-  var tnextarrival = moment(tfirsttraintime).add(tfrequency);
+  // var tnextarrival = moment(tfirsttraintime).add(tfrequency);
   var tminutesaway = "";
 
+   // First Time Converted (pushed back 1 year to make sure it comes before current time)
+
+   var firstTimeConverted = moment(tfirsttraintime, "hh:mm").subtract(1, "years");
+   console.log(firstTimeConverted);
+   
+   // Current Time
+   var currentTime = moment();
+   console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
   // Capture Button Click
   $("#add-train").on("click", function(event) {
     event.preventDefault();
-    // Grabbed values from text boxes
+
+  // Grab values from text boxes
     tname = $("#train_name").val().trim();
     tdestination = $("#train_destination").val().trim();
-    tfirsttraintime = $("#first_train_time").val().trim().moment().format(HHmm);
-    tfrequency = $("#train_frequency").val().trim().moment().format(m);
+    tfirsttraintime = $("#first_train_time").val().trim();
+    tfrequency = $("#train_frequency").val().trim();
 
     // Code for handling the push
     database.ref().push({
@@ -34,13 +43,14 @@ var config = {
       destination: tdestination,
       starttime: tfirsttraintime,
       frequency: tfrequency,
-      nextarrival: tnextarrival,
+      // nextarrival: tnextarrival,
       minutesaway: tminutesaway
     });
 
   });
   //===================================================
 database.ref().on("child_added", function(childSnapshot) {
+    var snapshotvalues = childSnapshot.val();
 
     // Log everything that's coming out of snapshot
     console.log(childSnapshot.val().name);
@@ -50,27 +60,54 @@ database.ref().on("child_added", function(childSnapshot) {
     console.log(childSnapshot.val().frequency);
     // console.log(childSnapshot.val().minutesaway);
 
-    // full list of items to the well
-    $(".table").append("</span><span id='name'> " + childSnapshot.val().name +
-      " </span><span id='destination'> " + childSnapshot.val().destination +
-      " </span><span id='frequency'> " + childSnapshot.val().frequency +
-      " </span><span id='nextarrival'> " + childSnapshot.val().nextarrival +
-      // " </span><span id='billed'> " + childSnapshot.val().minutesaway +
-      " </span>");
+    // Creating an array of each key in the snapshot object
 
-  // Handle the errors
-  }, function(errorObject) {
-    console.log("Errors handled: " + errorObject.code);
-  });
+    var SVA = Object.keys(snapshotvalues);
+    console.log("SVA");
+    console.log(SVA);
 
-  database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function(snapshot) {
+    // Finding the last user's key
+     var lastIndex = SVA.length - 1;
+     var lastKey = SVA[lastIndex];
+
+     // Using the last user's key to access the last added user object
+     var lastObj = snapshotvalues[lastKey]
+
+     // Console.logging the last user's data
+     console.log(lastObj.destination);
+     console.log(lastObj.frequency);
+     console.log(lastObj.nextArrival);
+     console.log(lastObj.minutes);
+
+
+    // Display data in the table on the HTML page
+    // $(".table").append("</span><span id='name'> " + childSnapshot.val().name +
+    //   " </span><span id='destination'> " + childSnapshot.val().destination +
+    //   " </span><span id='frequency'> " + childSnapshot.val().frequency +
+    //   " </span><span id='nextarrival'> " + childSnapshot.val().nextarrival +
+    //   // " </span><span id='billed'> " + childSnapshot.val().minutesaway +
+    //   " </span>");
+
+  //   $("#name").append(childSnapshot.val().name);
+  //   $("#destination").append(childSnapshot.val().destination);
+
+  // // Handle the errors
+  // }, function(errorObject) {
+  //   console.log("Errors handled: " + errorObject.code);
+  // });
+
+//   database.ref().orderByChild("dateAdded").limitToLast(8).on("train_added", function(snapshot) {
 
 // Change the HTML to reflect
-    // $("#name").html(lastObj.name);
-    // $("#role").html(lastObj.role);
-    // $("#start").html(lastObj.startDate);
-    // $("#worked").html(lastObj.monthsWorked);
-    //  $("#rate").html(lastObj.monthlyRate);
-    //   $("#billed").html(lastObj.totalBilled);
+//     $("#name").html(lastObj.tname);
+//     $("#destination").html(lastObj.tdestination);
+//     $("#frequency").html(lastObj.tfrequecy);
+//     $("#nextarrival").html(lastObj.tnextarrival);
+//     $("#minutesaway").html(lastObj.tminutesaway);
 
-  });
+//   });
+
+});
+
+
+
